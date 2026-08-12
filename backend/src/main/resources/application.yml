@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: tijdwijs
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:tijdwijs}
+    username: ${DB_USER:tijdwijs}
+    password: ${DB_PASSWORD:tijdwijs}
+    hikari:
+      initialization-fail-timeout: 60000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    clean-disabled: false
+    baseline-on-migrate: true
+  jackson:
+    default-property-inclusion: always
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8080
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+tijdwijs:
+  # Zet op true om de interne redencodes van afwijzingen in de logs te zien.
+  # Bedoeld voor facilitators, niet om de opdracht mee te beginnen.
+  debug-rules: ${DEBUG_RULES:false}
+
+logging:
+  level:
+    root: INFO
+    nl.haystaq: INFO
+    org.hibernate.SQL: WARN
